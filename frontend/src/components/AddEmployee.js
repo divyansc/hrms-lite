@@ -1,82 +1,101 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-function AddEmployee(){
+function AddEmployee() {
 
-const [form,setForm]=useState({
-employee_id:"",
-full_name:"",
-email:"",
-department:""
-});
+  const [form, setForm] = useState({
+    employee_id: "",
+    full_name: "",
+    email: "",
+    department: ""
+  });
 
-const handleChange=(e)=>{
-setForm({...form,[e.target.name]:e.target.value});
-}
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-const handleSubmit=async(e)=>{
-e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-try{
+    try {
 
-await axios.post("https://hrms-lite-xpi6.onrender.com/api/employees/",form);
+      const response = await axios.post(
+        "https://hrms-lite-xpi6.onrender.com/api/employees/",
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
 
-alert("Employee Added");
+      alert("Employee Added Successfully");
 
-}catch(err){
-alert("Error adding employee");
-}
+      console.log(response.data);
 
-}
+      // reset form
+      setForm({
+        employee_id: "",
+        full_name: "",
+        email: "",
+        department: ""
+      });
 
-return(
+    } catch (err) {
 
-<div>
+      console.error(err.response?.data);
+      alert("Error adding employee");
 
-<h2>Add Employee</h2>
+    }
+  };
 
-<form onSubmit={handleSubmit}>
+  return (
+    <div>
+      <h2>Add Employee</h2>
 
-<input
-name="employee_id"
-placeholder="Employee ID"
-onChange={handleChange}
-/>
+      <form onSubmit={handleSubmit}>
 
-<br/>
+        <input
+          name="employee_id"
+          placeholder="Employee ID"
+          value={form.employee_id}
+          onChange={handleChange}
+        />
 
-<input
-name="full_name"
-placeholder="Full Name"
-onChange={handleChange}
-/>
+        <br />
 
-<br/>
+        <input
+          name="full_name"
+          placeholder="Full Name"
+          value={form.full_name}
+          onChange={handleChange}
+        />
 
-<input
-name="email"
-placeholder="Email"
-onChange={handleChange}
-/>
+        <br />
 
-<br/>
+        <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
 
-<input
-name="department"
-placeholder="Department"
-onChange={handleChange}
-/>
+        <br />
 
-<br/>
+        <input
+          name="department"
+          placeholder="Department"
+          value={form.department}
+          onChange={handleChange}
+        />
 
-<button type="submit">Add</button>
+        <br />
 
-</form>
+        <button type="submit">Add</button>
 
-</div>
-
-)
-
+      </form>
+    </div>
+  );
 }
 
 export default AddEmployee;
