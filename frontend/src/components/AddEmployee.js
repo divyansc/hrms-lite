@@ -1,54 +1,100 @@
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
-
-const API = process.env.REACT_APP_API_URL;
 
 function AddEmployee() {
 
-  const [employeeId, setEmployeeId] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
+  const [form, setForm] = useState({
+    employee_id: "",
+    full_name: "",
+    email: "",
+    department: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post(`${API}/employees/`, {
-        employee_id: employeeId,
-        full_name: fullName,
-        email: email,
-        department: department
+        
+      const API = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${API}/employees/`,
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      alert("Employee Added Successfully");
+
+      console.log(response.data);
+
+      // reset form
+      setForm({
+        employee_id: "",
+        full_name: "",
+        email: "",
+        department: ""
       });
 
-      alert("Employee added successfully");
+    } catch (err) {
 
-    } catch (error) {
-      console.error(error.response.data);
-      alert("Failed to add employee");
+      console.error(err.response?.data);
+      alert("Error adding employee");
+
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input placeholder="Employee ID"
-        value={employeeId}
-        onChange={(e)=>setEmployeeId(e.target.value)} />
+    <div>
+      <h2>Add Employee</h2>
 
-      <input placeholder="Full Name"
-        value={fullName}
-        onChange={(e)=>setFullName(e.target.value)} />
+      <form onSubmit={handleSubmit}>
 
-      <input placeholder="Email"
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)} />
+        <input
+          name="employee_id"
+          placeholder="Employee ID"
+          value={form.employee_id}
+          onChange={handleChange}
+        />
 
-      <input placeholder="Department"
-        value={department}
-        onChange={(e)=>setDepartment(e.target.value)} />
+        <br />
 
-      <button type="submit">Add Employee</button>
-    </form>
+        <input
+          name="full_name"
+          placeholder="Full Name"
+          value={form.full_name}
+          onChange={handleChange}
+        />
+
+        <br />
+
+        <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
+
+        <br />
+
+        <input
+          name="department"
+          placeholder="Department"
+          value={form.department}
+          onChange={handleChange}
+        />
+
+        <br />
+
+        <button type="submit">Add</button>
+
+      </form>
+    </div>
   );
 }
 
