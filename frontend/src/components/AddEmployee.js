@@ -19,7 +19,7 @@ e.preventDefault();
 
 try{
 
-await axios.post("http://127.0.0.1:8000/api/employees/",form);
+await axios.post("https://hrms-lite-xpi6.onrender.com/employees/",form);
 
 alert("Employee Added");
 

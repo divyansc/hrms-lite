@@ -64,9 +64,8 @@ const getAttendance = async () => {
 
 try{
 
-const res = await axios.get(`http://127.0.0.1:8000/api/attendance/${employee}/`);
+const res = await axios.get("https://hrms-lite-xpi6.onrender.com/employees/");
 setRecords(res.data);
-
 }catch(err){
 
 console.log(err);
