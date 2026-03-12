@@ -17,7 +17,8 @@ const getEmployees = async () => {
 
 try{
 
-const res = await axios.get("http://127.0.0.1:8000/api/employees/");
+const API = process.env.REACT_APP_API_URL;
+const res = await axios.get(`${API}/employees/`);
 setEmployees(res.data);
 
 }catch(err){
@@ -32,7 +33,8 @@ const submitAttendance = async () => {
 
 try{
 
-await axios.post("http://127.0.0.1:8000/api/attendance/",{
+const API = process.env.REACT_APP_API_URL;
+await axios.post(`${API}/attendance/`,{
 employee:employee,
 date:date,
 status:status
