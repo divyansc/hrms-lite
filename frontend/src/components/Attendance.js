@@ -64,7 +64,9 @@ const getAttendance = async () => {
 
 try{
 
-const res = await axios.get("https://hrms-lite-xpi6.onrender.com/api/employees/");
+const API = process.env.REACT_APP_API_URL;
+
+const res = await axios.get(`${API}/employees/`);
 setRecords(res.data);
 }catch(err){
 

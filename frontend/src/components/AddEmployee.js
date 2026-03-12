@@ -18,9 +18,9 @@ function AddEmployee() {
     e.preventDefault();
 
     try {
-
-      const response = await axios.post(
-        "https://hrms-lite-xpi6.onrender.com/api/employees/",
+        
+      const API = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${API}/employees/`,
         form,
         {
           headers: {
