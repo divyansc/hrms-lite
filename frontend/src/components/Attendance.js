@@ -64,7 +64,7 @@ const getAttendance = async () => {
 
 try{
 
-const res = await axios.get("https://hrms-lite-xpi6.onrender.com/employees/");
+const res = await axios.get("https://hrms-lite-xpi6.onrender.com/api/employees/");
 setRecords(res.data);
 }catch(err){
 

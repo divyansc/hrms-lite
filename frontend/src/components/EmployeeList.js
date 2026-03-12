@@ -7,7 +7,7 @@ const [employees,setEmployees]=useState([]);
 
 const getEmployees=async()=>{
 
-const res=await axios.get("https://hrms-lite-xpi6.onrender.com/employees/");
+const res=await axios.get("https://hrms-lite-xpi6.onrender.com/api/employees/");
 
 setEmployees(res.data);
 
