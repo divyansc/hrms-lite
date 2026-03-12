@@ -1,49 +1,29 @@
-import React,{useEffect,useState} from "react";
 import axios from "axios";
-
-function EmployeeList(){
-
-const [employees,setEmployees]=useState([]);
-
-const getEmployees=async()=>{
+import { useEffect, useState } from "react";
 
 const API = process.env.REACT_APP_API_URL;
-const res = await axios.get(`${API}/employees/`);
 
-setEmployees(res.data);
+function EmployeeList() {
 
-}
+  const [employees, setEmployees] = useState([]);
 
-useEffect(()=>{
+  useEffect(() => {
+    axios.get(`${API}/employees/`)
+      .then(res => setEmployees(res.data))
+      .catch(err => console.error(err));
+  }, []);
 
-getEmployees();
+  return (
+    <div>
+      <h2>Employees</h2>
 
-},[])
-
-return(
-
-<div>
-
-<h2>Employee List</h2>
-
-<ul>
-
-{employees.map(emp=>(
-
-<li key={emp.id}>
-
-{emp.full_name} - {emp.department}
-
-</li>
-
-))}
-
-</ul>
-
-</div>
-
-)
-
+      {employees.map(emp => (
+        <div key={emp.employee_id}>
+          {emp.full_name} - {emp.department}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default EmployeeList;
